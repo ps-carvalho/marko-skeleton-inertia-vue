@@ -1,0 +1,28 @@
+/vendor/
+/node_modules/
+/.phpunit.cache/
+/.marko/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Runtime storage
+/storage/*
+!/storage/.gitkeep
+!/storage/logs/
+!/storage/logs/.gitkeep
+
+# Frontend and SSR build output
+/public/build/
+/public/storage/
+/bootstrap/ssr/*
+!/bootstrap/ssr/.gitkeep
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
