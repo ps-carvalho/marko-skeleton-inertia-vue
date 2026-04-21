@@ -1,0 +1,7 @@
+parameters:
+    level: max
+    paths:
+        - app/web/src
+        - app/web/module.php
+        - config
+    reportUnmatchedIgnoredErrors: false

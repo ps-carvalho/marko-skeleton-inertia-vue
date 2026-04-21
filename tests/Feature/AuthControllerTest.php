@@ -42,8 +42,22 @@ test('login accepts json credentials and returns validation errors', function ()
     expect(json_decode($response->body(), true))->toHaveKey('errors');
 });
 
+test('login handles invalid json and missing credentials as validation errors', function () {
+    $auth = new FakeAuthManager(attemptResult: false);
+    $controller = new AuthController($auth);
+
+    $response = $controller->login(new Request(body: '{invalid-json'));
+
+    expect($auth->attemptedCredentials)->toBe([
+        'email' => null,
+        'password' => null,
+    ]);
+    expect($response->statusCode())->toBe(422);
+    expect(json_decode($response->body(), true)['errors']['message'])->toContain('Invalid credentials');
+});
+
 test('logout clears the auth session and redirects home', function () {
-    $auth = new FakeAuthManager();
+    $auth = new FakeAuthManager;
     $controller = new AuthController($auth);
 
     $response = $controller->logout();

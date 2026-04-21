@@ -10,7 +10,6 @@ use Marko\Routing\Http\Request;
 test('home page returns the landing inertia component', function () {
     $controller = new HomeController(
         createApplicationInertia(),
-        new FakeAuthManager(),
     );
 
     $response = $controller->index(new Request(server: [
@@ -28,7 +27,6 @@ test('home page returns the landing inertia component', function () {
 test('home page full response uses the vue vite entry', function () {
     $controller = new HomeController(
         createApplicationInertia(),
-        new FakeAuthManager(),
     );
 
     $response = $controller->index(new Request(server: [
@@ -38,8 +36,39 @@ test('home page full response uses the vue vite entry', function () {
     expect($response->body())->toContain('app/web/resources/js/app.js');
 });
 
+test('login page returns the login inertia component', function () {
+    $controller = new HomeController(
+        createApplicationInertia(),
+    );
+
+    $response = $controller->login(new Request(server: [
+        'HTTP_X_INERTIA' => 'true',
+        'REQUEST_URI' => '/login',
+    ]));
+
+    $page = json_decode($response->body(), true);
+
+    expect($page['component'])->toBe('Login');
+    expect($page['url'])->toBe('/login');
+});
+
+test('about route returns skeleton metadata as json', function () {
+    $controller = new HomeController(
+        createApplicationInertia(),
+    );
+
+    $response = $controller->about();
+    $payload = json_decode($response->body(), true);
+
+    expect($response->headers()['Content-Type'])->toBe('application/json');
+    expect($payload)->toMatchArray([
+        'name' => 'Marko Skeleton',
+        'description' => 'A modular PHP framework with attribute-based routing.',
+    ]);
+});
+
 test('dashboard page exposes authenticated user props', function () {
-    $provider = new InMemoryUserProvider();
+    $provider = new InMemoryUserProvider;
     $user = $provider->retrieveByCredentials(['email' => 'demo@example.com']);
 
     $controller = new PageController(
@@ -64,8 +93,25 @@ test('dashboard page exposes authenticated user props', function () {
     expect($page['props']['activities'])->toHaveCount(5);
 });
 
+test('dashboard page falls back to an empty user when unauthenticated', function () {
+    $controller = new PageController(
+        createApplicationInertia(),
+        new FakeAuthManager,
+    );
+
+    $response = $controller->dashboard(new Request(server: [
+        'HTTP_X_INERTIA' => 'true',
+        'REQUEST_URI' => '/dashboard',
+    ]));
+
+    $page = json_decode($response->body(), true);
+
+    expect($page['component'])->toBe('Dashboard');
+    expect($page['props']['user'])->toBe([]);
+});
+
 test('profile page exposes authenticated user props', function () {
-    $provider = new InMemoryUserProvider();
+    $provider = new InMemoryUserProvider;
     $user = $provider->retrieveById(1);
 
     $controller = new PageController(

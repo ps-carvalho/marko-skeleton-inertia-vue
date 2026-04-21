@@ -50,6 +50,9 @@ class User implements AuthenticatableInterface
         return 'remember_token';
     }
 
+    /**
+     * @return array<string, int|string>
+     */
     public function toArray(): array
     {
         return [

@@ -1,5 +1,8 @@
 # Marko Inertia Vue Skeleton
 
+[![Quality](https://img.shields.io/github/actions/workflow/status/ps-carvalho/marko-skeleton-inertia-vue/quality.yml?branch=main&label=quality)](https://github.com/ps-carvalho/marko-skeleton-inertia-vue/actions/workflows/quality.yml)
+[![Build](https://img.shields.io/github/actions/workflow/status/ps-carvalho/marko-skeleton-inertia-vue/quality.yml?branch=main&label=build)](https://github.com/ps-carvalho/marko-skeleton-inertia-vue/actions/workflows/quality.yml)
+
 Standalone Marko application skeleton with Inertia.js, Vue 3, Tailwind CSS, Vite, sessions, authentication, and Pest tests.
 
 ## Create a Project
@@ -16,12 +19,12 @@ The development server runs PHP on `http://localhost:8000`, Vite on `http://loca
 
 ## Included Routes
 
-| Route | Component | Purpose |
-| --- | --- | --- |
-| `/` | `Landing` | Public landing page |
-| `/login` | `Login` | Demo sign-in form |
+| Route        | Component   | Purpose                 |
+| ------------ | ----------- | ----------------------- |
+| `/`          | `Landing`   | Public landing page     |
+| `/login`     | `Login`     | Demo sign-in form       |
 | `/dashboard` | `Dashboard` | Authenticated dashboard |
-| `/profile` | `Profile` | Authenticated profile |
+| `/profile`   | `Profile`   | Authenticated profile   |
 
 Demo credentials:
 

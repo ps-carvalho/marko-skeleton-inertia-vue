@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
       target: dev
     ports:
-      - "8000:8000"
-      - "5174:5173"
+      - '8000:8000'
+      - '5174:5173'
     volumes:
       - .:/app
       # Use named volumes for node_modules and vendor so host

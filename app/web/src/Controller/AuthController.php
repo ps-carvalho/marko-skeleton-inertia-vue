@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Web\Controller;
 
+use JsonException;
 use Marko\Authentication\AuthManager;
 use Marko\Routing\Attributes\Post;
 use Marko\Routing\Http\Request;
 use Marko\Routing\Http\Response;
-use JsonException;
 
 class AuthController
 {
@@ -16,7 +16,7 @@ class AuthController
         private AuthManager $auth,
     ) {}
 
-    #[Post("/login")]
+    #[Post('/login')]
     public function login(Request $request): Response
     {
         $credentials = [
@@ -33,7 +33,7 @@ class AuthController
         ], 422);
     }
 
-    #[Post("/logout")]
+    #[Post('/logout')]
     public function logout(): Response
     {
         $this->auth->logout();
@@ -41,11 +41,11 @@ class AuthController
         return Response::redirect('/');
     }
 
-    private function input(Request $request, string $key): mixed
+    private function input(Request $request, string $key): ?string
     {
         $value = $request->post($key);
 
-        if ($value !== null) {
+        if (is_string($value)) {
             return $value;
         }
 
@@ -55,6 +55,8 @@ class AuthController
             return null;
         }
 
-        return is_array($payload) ? ($payload[$key] ?? null) : null;
+        $value = is_array($payload) ? ($payload[$key] ?? null) : null;
+
+        return is_string($value) ? $value : null;
     }
 }

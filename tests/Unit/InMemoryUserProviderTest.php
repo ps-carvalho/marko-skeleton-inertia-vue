@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Web\Auth\InMemoryUserProvider;
 
 test('demo user can be retrieved by id and credentials', function () {
-    $provider = new InMemoryUserProvider();
+    $provider = new InMemoryUserProvider;
 
     $byId = $provider->retrieveById(1);
     $byCredentials = $provider->retrieveByCredentials([
@@ -21,18 +21,27 @@ test('demo user can be retrieved by id and credentials', function () {
     ]);
 });
 
+test('unknown users are not returned by id or credentials', function () {
+    $provider = new InMemoryUserProvider;
+
+    expect($provider->retrieveById(999))->toBeNull();
+    expect($provider->retrieveByCredentials(['email' => 'missing@example.com']))->toBeNull();
+    expect($provider->retrieveByCredentials([]))->toBeNull();
+});
+
 test('demo user validates password credentials', function () {
-    $provider = new InMemoryUserProvider();
+    $provider = new InMemoryUserProvider;
     $user = $provider->retrieveByCredentials([
         'email' => 'demo@example.com',
     ]);
 
     expect($provider->validateCredentials($user, ['password' => 'password']))->toBeTrue();
     expect($provider->validateCredentials($user, ['password' => 'wrong']))->toBeFalse();
+    expect($provider->validateCredentials($user, []))->toBeFalse();
 });
 
 test('remember token is stored on the demo user', function () {
-    $provider = new InMemoryUserProvider();
+    $provider = new InMemoryUserProvider;
     $user = $provider->retrieveById(1);
 
     $provider->updateRememberToken($user, 'token-value');

@@ -1,54 +1,67 @@
 {
-    "name": "marko/skeleton-inertia-vue",
-    "description": "Marko Framework application skeleton with Inertia.js and Vue 3",
-    "license": "MIT",
-    "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/ps-carvalho/marko-packages"
-        }
+  "name": "marko/skeleton-inertia-vue",
+  "description": "Marko Framework application skeleton with Inertia.js and Vue 3",
+  "license": "MIT",
+  "type": "project",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ps-carvalho/marko-packages"
+    }
+  ],
+  "require": {
+    "php": "^8.5",
+    "marko/env": "^0.1.0",
+    "marko/framework": "^0.1.0",
+    "marko/authentication": "^0.1.0",
+    "marko/packages": "dev-main as 0.1.0",
+    "marko/inertia-vue": "^0.1.0",
+    "marko/session": "^0.1.0",
+    "marko/session-file": "^0.1.0"
+  },
+  "require-dev": {
+    "marko/dev-server": "*",
+    "laravel/pint": "^1.25",
+    "pestphp/pest": "^4.0",
+    "phpstan/phpstan": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\Web\\": "app/web/src/"
+    }
+  },
+  "scripts": {
+    "dev": [
+      "Composer\\Config::disableProcessTimeout",
+      "npm run build:ssr",
+      "npx concurrently -k \"php -S 0.0.0.0:8000 -t public/\" \"npx vite --host\" \"node bootstrap/ssr/ssr.js\" --names \"PHP,VITE,SSR\" --prefix-colors \"blue,green,yellow\""
     ],
-    "require": {
-        "php": "^8.5",
-        "marko/env": "^0.1.0",
-        "marko/framework": "^0.1.0",
-        "marko/authentication": "^0.1.0",
-        "marko/packages": "dev-main as 0.1.0",
-        "marko/inertia-vue": "^0.1.0",
-        "marko/session": "^0.1.0",
-        "marko/session-file": "^0.1.0"
-    },
-    "require-dev": {
-        "marko/dev-server": "*",
-        "pestphp/pest": "^4.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "App\\Web\\": "app/web/src/"
-        }
-    },
-    "scripts": {
-        "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "npm run build:ssr",
-            "npx concurrently -k \"php -S 0.0.0.0:8000 -t public/\" \"npx vite --host\" \"node bootstrap/ssr/ssr.js\" --names \"PHP,VITE,SSR\" --prefix-colors \"blue,green,yellow\""
-        ],
-        "dev:ssr": [
-            "Composer\\Config::disableProcessTimeout",
-            "npm run build:ssr",
-            "npx concurrently -k \"php -S 0.0.0.0:8000 -t public/\" \"npx vite --host\" \"node bootstrap/ssr/ssr.js\" --names \"PHP,VITE,SSR\" --prefix-colors \"blue,green,yellow\""
-        ],
-        "build": [
-            "npm run build",
-            "npm run build:ssr"
-        ]
-    },
-    "config": {
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "dev:ssr": [
+      "Composer\\Config::disableProcessTimeout",
+      "npm run build:ssr",
+      "npx concurrently -k \"php -S 0.0.0.0:8000 -t public/\" \"npx vite --host\" \"node bootstrap/ssr/ssr.js\" --names \"PHP,VITE,SSR\" --prefix-colors \"blue,green,yellow\""
+    ],
+    "build": [
+      "npm run build",
+      "npm run build:ssr"
+    ],
+    "test": "vendor/bin/pest --colors=always",
+    "analyse": "vendor/bin/phpstan analyse --memory-limit=1G",
+    "format": "vendor/bin/pint",
+    "lint": [
+      "@analyse",
+      "vendor/bin/pint --test"
+    ],
+    "quality": [
+      "@lint",
+      "@test"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

@@ -19,6 +19,9 @@
 /public/storage/
 /bootstrap/ssr/*
 !/bootstrap/ssr/.gitkeep
+/coverage/
+/playwright-report/
+/test-results/
 
 # OS and editor files
 .DS_Store

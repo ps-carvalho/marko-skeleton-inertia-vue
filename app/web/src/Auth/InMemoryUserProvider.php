@@ -28,29 +28,35 @@ class InMemoryUserProvider implements UserProviderInterface
 
     public function retrieveById(int|string $identifier): ?AuthenticatableInterface
     {
-        if ($identifier == 1) {
+        if ((string) $identifier === '1') {
             return $this->demoUser;
         }
 
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $credentials
+     */
     public function retrieveByCredentials(array $credentials): ?AuthenticatableInterface
     {
         $email = $credentials['email'] ?? null;
 
-        if ($email === $this->demoUser->toArray()['email']) {
+        if ($email === 'demo@example.com') {
             return $this->demoUser;
         }
 
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $credentials
+     */
     public function validateCredentials(AuthenticatableInterface $user, array $credentials): bool
     {
         $password = $credentials['password'] ?? '';
 
-        return password_verify($password, $user->getAuthPassword());
+        return is_string($password) && password_verify($password, $user->getAuthPassword());
     }
 
     public function retrieveByRememberToken(int|string $identifier, string $token): ?AuthenticatableInterface

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 // Marko application test bootstrap
 
-use Marko\Authentication\AuthManager;
 use Marko\Authentication\AuthenticatableInterface;
+use Marko\Authentication\AuthManager;
 use Marko\Config\ConfigRepository;
 use Marko\Core\Path\ProjectPaths;
 use Marko\Inertia\Inertia;

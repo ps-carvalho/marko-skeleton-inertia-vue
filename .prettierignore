@@ -1,0 +1,7 @@
+bootstrap/ssr
+composer.lock
+node_modules
+package-lock.json
+public/build
+storage
+vendor

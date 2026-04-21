@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Web\Controller;
 
+use App\Web\Model\User;
 use Marko\Authentication\AuthManager;
 use Marko\Authentication\Middleware\AuthMiddleware;
 use Marko\Inertia\Inertia;
@@ -23,7 +24,7 @@ class PageController
         private AuthManager $auth,
     ) {}
 
-    #[Get("/dashboard")]
+    #[Get('/dashboard')]
     public function dashboard(Request $request): Response
     {
         $user = $this->auth->user();
@@ -32,7 +33,7 @@ class PageController
             request: $request,
             component: 'Dashboard',
             props: [
-                'user' => $user?->toArray() ?? [],
+                'user' => $user instanceof User ? $user->toArray() : [],
                 'chartData' => [45, 62, 38, 75, 52, 88, 67],
                 'activities' => [
                     ['title' => 'Deployed new version to production', 'time' => '2 hours ago'],
@@ -46,7 +47,7 @@ class PageController
         );
     }
 
-    #[Get("/profile")]
+    #[Get('/profile')]
     public function profile(Request $request): Response
     {
         $user = $this->auth->user();
@@ -55,7 +56,7 @@ class PageController
             request: $request,
             component: 'Profile',
             props: [
-                'user' => $user?->toArray() ?? [],
+                'user' => $user instanceof User ? $user->toArray() : [],
             ],
             assetEntry: self::ASSET_ENTRY,
         );

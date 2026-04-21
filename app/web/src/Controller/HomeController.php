@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Web\Controller;
 
-use Marko\Authentication\AuthManager;
 use Marko\Authentication\Middleware\GuestMiddleware;
 use Marko\Inertia\Inertia;
 use Marko\Inertia\Middleware\InertiaMiddleware;
@@ -20,22 +19,21 @@ class HomeController
 
     public function __construct(
         private Inertia $inertia,
-        private AuthManager $auth,
     ) {}
 
-    #[Get("/")]
+    #[Get('/')]
     public function index(Request $request): Response
     {
         return $this->inertia->render($request, 'Landing', assetEntry: self::ASSET_ENTRY);
     }
 
-    #[Get("/login", middleware: [GuestMiddleware::class])]
+    #[Get('/login', middleware: [GuestMiddleware::class])]
     public function login(Request $request): Response
     {
         return $this->inertia->render($request, 'Login', assetEntry: self::ASSET_ENTRY);
     }
 
-    #[Get("/about")]
+    #[Get('/about')]
     public function about(): Response
     {
         return Response::json([
