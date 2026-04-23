@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4d9ebac520d086614db7de0aa869938",
+    "content-hash": "20940154ae1d5e63072294c9a13a5d9d",
     "packages": [
         {
             "name": "marko/authentication",
@@ -402,34 +402,30 @@
             "time": "2026-03-25T17:53:35+00:00"
         },
         {
-            "name": "marko/packages",
+            "name": "marko/inertia",
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ps-carvalho/marko-packages.git",
-                "reference": "1e17a03fd4707fea6d656042bf0f29139191fa8b"
+                "url": "https://github.com/ps-carvalho/marko-inertia.git",
+                "reference": "aab9ecdb46d7f024f89061193c7daa78702d7f23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ps-carvalho/marko-packages/zipball/1e17a03fd4707fea6d656042bf0f29139191fa8b",
-                "reference": "1e17a03fd4707fea6d656042bf0f29139191fa8b",
+                "url": "https://api.github.com/repos/ps-carvalho/marko-inertia/zipball/aab9ecdb46d7f024f89061193c7daa78702d7f23",
+                "reference": "aab9ecdb46d7f024f89061193c7daa78702d7f23",
                 "shasum": ""
             },
             "require": {
                 "marko/config": "^0.1.0",
                 "marko/core": "^0.1.0",
                 "marko/routing": "^0.1.0",
+                "marko/vite": "^0.1.0@dev",
                 "php": "^8.5"
             },
-            "replace": {
-                "marko/inertia": "self.version",
-                "marko/inertia-react": "self.version",
-                "marko/inertia-svelte": "self.version",
-                "marko/inertia-vue": "self.version",
-                "marko/vite": "self.version"
-            },
             "require-dev": {
-                "pestphp/pest": "^4.0"
+                "friendsofphp/php-cs-fixer": "^3.92",
+                "pestphp/pest": "^4.0",
+                "phpstan/phpstan": "^2.1"
             },
             "default-branch": true,
             "type": "marko-module",
@@ -443,36 +439,128 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Marko\\Inertia\\": "inertia/src/",
-                    "Marko\\InertiaReact\\": "inertia-react/src/",
-                    "Marko\\InertiaSvelte\\": "inertia-svelte/src/",
-                    "Marko\\InertiaVue\\": "inertia-vue/src/",
-                    "Marko\\Vite\\": "vite/src/"
+                    "Marko\\Inertia\\": "src/"
                 }
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Marko\\Inertia\\Tests\\": "inertia/tests/",
-                    "Marko\\InertiaReact\\Tests\\": "inertia-react/tests/",
-                    "Marko\\InertiaSvelte\\Tests\\": "inertia-svelte/tests/",
-                    "Marko\\InertiaVue\\Tests\\": "inertia-vue/tests/",
-                    "Marko\\Vite\\Tests\\": "vite/tests/"
+                    "Marko\\Inertia\\Tests\\": "tests/"
                 }
             },
             "scripts": {
                 "test": [
-                    "vendor/bin/pest"
+                    "vendor/bin/pest --colors=always"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse --memory-limit=1G"
+                ],
+                "cs:check": [
+                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff"
+                ],
+                "cs:fix": [
+                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php"
+                ],
+                "format": [
+                    "@cs:fix"
+                ],
+                "lint": [
+                    "@analyse",
+                    "@cs:check"
+                ],
+                "quality": [
+                    "@lint",
+                    "@test"
                 ]
             },
             "license": [
                 "MIT"
             ],
-            "description": "Monorepo package for Marko Inertia and Vite integrations",
+            "description": "Inertia.js protocol integration for the Marko Framework — middleware, response factory, shared data, and SSR support",
             "support": {
-                "source": "https://github.com/ps-carvalho/marko-packages/tree/main",
-                "issues": "https://github.com/ps-carvalho/marko-packages/issues"
+                "source": "https://github.com/ps-carvalho/marko-inertia/tree/main",
+                "issues": "https://github.com/ps-carvalho/marko-inertia/issues"
             },
-            "time": "2026-04-21T16:48:58+00:00"
+            "time": "2026-04-23T21:51:37+00:00"
+        },
+        {
+            "name": "marko/inertia-vue",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ps-carvalho/marko-inertia-vue.git",
+                "reference": "f0845cc07106a509fedeb51254a620ea8680f406"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ps-carvalho/marko-inertia-vue/zipball/f0845cc07106a509fedeb51254a620ea8680f406",
+                "reference": "f0845cc07106a509fedeb51254a620ea8680f406",
+                "shasum": ""
+            },
+            "require": {
+                "marko/core": "^0.1.0",
+                "marko/inertia": "^0.1.0@dev",
+                "marko/vite": "^0.1.0@dev",
+                "php": "^8.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.92",
+                "pestphp/pest": "^4.0",
+                "phpstan/phpstan": "^2.1"
+            },
+            "default-branch": true,
+            "type": "marko-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                },
+                "marko": {
+                    "module": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Marko\\InertiaVue\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Marko\\InertiaVue\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/pest --colors=always"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse --memory-limit=1G"
+                ],
+                "cs:check": [
+                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff"
+                ],
+                "cs:fix": [
+                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php"
+                ],
+                "format": [
+                    "@cs:fix"
+                ],
+                "lint": [
+                    "@analyse",
+                    "@cs:check"
+                ],
+                "quality": [
+                    "@lint",
+                    "@test"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Vue 3 companion for marko/inertia — scaffolding and SSR server entry point",
+            "support": {
+                "source": "https://github.com/ps-carvalho/marko-inertia-vue/tree/main",
+                "issues": "https://github.com/ps-carvalho/marko-inertia-vue/issues"
+            },
+            "time": "2026-04-23T21:51:37+00:00"
         },
         {
             "name": "marko/routing",
@@ -635,6 +723,85 @@
                 "source": "https://github.com/marko-php/marko-validation/tree/0.1.3"
             },
             "time": "2026-03-25T17:53:35+00:00"
+        },
+        {
+            "name": "marko/vite",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ps-carvalho/marko-vite.git",
+                "reference": "68565d97f7b7dbc9c3164077907d5d264602cf37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ps-carvalho/marko-vite/zipball/68565d97f7b7dbc9c3164077907d5d264602cf37",
+                "reference": "68565d97f7b7dbc9c3164077907d5d264602cf37",
+                "shasum": ""
+            },
+            "require": {
+                "marko/config": "^0.1.0",
+                "marko/core": "^0.1.0",
+                "php": "^8.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.92",
+                "pestphp/pest": "^4.0",
+                "phpstan/phpstan": "^2.1"
+            },
+            "default-branch": true,
+            "type": "marko-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.1.x-dev"
+                },
+                "marko": {
+                    "module": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Marko\\Vite\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Marko\\Vite\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/pest --colors=always"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse --memory-limit=1G"
+                ],
+                "cs:check": [
+                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff"
+                ],
+                "cs:fix": [
+                    "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php"
+                ],
+                "format": [
+                    "@cs:fix"
+                ],
+                "lint": [
+                    "@analyse",
+                    "@cs:check"
+                ],
+                "quality": [
+                    "@lint",
+                    "@test"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Vite integration for the Marko Framework - asset manifest resolution and dev-server detection",
+            "support": {
+                "source": "https://github.com/ps-carvalho/marko-vite/tree/main",
+                "issues": "https://github.com/ps-carvalho/marko-vite/issues"
+            },
+            "time": "2026-04-23T21:30:41+00:00"
         },
         {
             "name": "psr/container",
@@ -4678,18 +4845,9 @@
             "time": "2026-04-11T10:33:05+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "marko/packages",
-            "version": "dev-main",
-            "alias": "0.1.0",
-            "alias_normalized": "0.1.0.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "marko/packages": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

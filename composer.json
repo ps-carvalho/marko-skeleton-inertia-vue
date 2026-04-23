@@ -6,7 +6,15 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/ps-carvalho/marko-packages"
+      "url": "https://github.com/ps-carvalho/marko-vite.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/ps-carvalho/marko-inertia.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/ps-carvalho/marko-inertia-vue.git"
     }
   ],
   "require": {
@@ -14,7 +22,6 @@
     "marko/env": "^0.1.0",
     "marko/framework": "^0.1.0",
     "marko/authentication": "^0.1.0",
-    "marko/packages": "dev-main as 0.1.0",
     "marko/inertia-vue": "^0.1.0",
     "marko/session": "^0.1.0",
     "marko/session-file": "^0.1.0"
