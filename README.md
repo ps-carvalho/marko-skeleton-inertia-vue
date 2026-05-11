@@ -57,7 +57,7 @@ vendor/bin/pest       # PHP tests
 
 ## Composer Packages
 
-This skeleton resolves the Marko PHP packages from the standalone GitHub repositories for `marko/vite`, `marko/inertia`, and `marko/inertia-vue`. The root app declares those VCS repositories directly and requires the Vue adapter package, which pulls in the core Inertia and Vite packages transitively.
+This skeleton requires `marko/inertia-vue`, which pulls in the core Marko Framework, Inertia, and Vite packages transitively from Packagist.
 
 SSR is available but disabled by default through `.env.example`:
 

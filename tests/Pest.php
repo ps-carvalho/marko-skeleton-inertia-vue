@@ -9,7 +9,10 @@ use Marko\Authentication\AuthManager;
 use Marko\Config\ConfigRepository;
 use Marko\Core\Path\ProjectPaths;
 use Marko\Inertia\Inertia;
+use Marko\Inertia\Ssr\CurlSsrTransport;
 use Marko\Inertia\Ssr\SsrClient;
+use Marko\Session\Contracts\SessionInterface;
+use Marko\Session\Flash\FlashBag;
 use Marko\Vite\Vite;
 
 function createApplicationInertia(array $config = []): Inertia
@@ -39,8 +42,64 @@ function createApplicationInertia(array $config = []): Inertia
     return new Inertia(
         $mergedConfig,
         $vite,
-        new SsrClient('http://localhost:13714'),
+        new SsrClient($mergedConfig, new CurlSsrTransport),
+        new FakeSession,
     );
+}
+
+class FakeSession implements SessionInterface
+{
+    public bool $started = true;
+
+    private array $data = [];
+
+    private FlashBag $flashBag;
+
+    public function __construct()
+    {
+        $this->flashBag = new FlashBag($this->data);
+    }
+
+    public function start(): void {}
+
+    public function get(string $key, mixed $default = null): mixed
+    {
+        return $default;
+    }
+
+    public function set(string $key, mixed $value): void {}
+
+    public function has(string $key): bool
+    {
+        return false;
+    }
+
+    public function remove(string $key): void {}
+
+    public function clear(): void {}
+
+    public function all(): array
+    {
+        return [];
+    }
+
+    public function regenerate(bool $deleteOldSession = true): void {}
+
+    public function destroy(): void {}
+
+    public function getId(): string
+    {
+        return '';
+    }
+
+    public function setId(string $id): void {}
+
+    public function flash(): FlashBag
+    {
+        return $this->flashBag;
+    }
+
+    public function save(): void {}
 }
 
 class FakeAuthManager extends AuthManager
